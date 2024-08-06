@@ -34,7 +34,12 @@ def TAIDEchat(sInput):
     text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
     model_inputs = tokenizer([text], return_tensors="pt").to(device)
     # 生成回覆
-    generated_ids = model.generate(model_inputs.input_ids, max_new_tokens=512)
+    generated_ids = model.generate(
+        model_inputs.input_ids, 
+        max_new_tokens=512,
+        attention_mask=model_inputs.attention_mask,
+        pad_token_id=tokenizer.eos_token_id
+    )
     generated_ids = [
         output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
     ]
