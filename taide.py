@@ -28,7 +28,8 @@ def TAIDEchat(sInput):
               f"不要寫程式 回覆不重複" #do not generate code and answer again
              )
     messages = [
-        {"role": "user", "content": prompt}
+        {"role": "system", "content": prompt},
+        {"role": "user", "content": sInput}
     ]
     # 將提示詞輸入模型
     text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
